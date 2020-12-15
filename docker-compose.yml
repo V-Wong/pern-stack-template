@@ -14,7 +14,8 @@ services:
     ports:
       - "4000:4000"
     volumes:
-      - ./app/src:/usr/src/app/src
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
 
   postgres:
     container_name: postgres
