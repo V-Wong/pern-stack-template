@@ -2,33 +2,29 @@ version: "3"
 services:
   backend-template:
     container_name: backend-template
-    build:
-      context: .
-      dockerfile: .Dockerfile
+    build: ./backend/
     depends_on:
-      - postgres
+      - db
     environment:
-      DATABASE_URL: postgres://postgres:newPassword@postgres:5432/backend-db
+      DATABASE_URL: postgres://user:password@db/db
       NODE_ENV: development
       PORT: 4000
     ports:
       - "4000:4000"
     volumes:
-      - .:/usr/src/app
-      - /usr/src/app/node_modules
+      - ./backend:/usr/app
+      - /usr/app/node_modules
 
-  postgres:
-    container_name: postgres
-    image: postgres:13-alpine
-    ports:
-      - "5432:5432"
-    volumes: 
-      - ./src/migrations/dbinit.sql:/docker-entrypoint-initdb.d/init.sql
-    restart: always
+  db:
+    image: postgres
+    expose:
+      - 5432
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: newPassword
-      POSTGRES_DB: backend-db
+      POSTGRES_PASSWORD: password
+      POSTGRES_USER: user
+      POSTGRES_DB: db
+    volumes: 
+      - ./backend/src/migrations/dbinit.sql:/docker-entrypoint-initdb.d/init.sql
 
 volumes:
     db-data:
