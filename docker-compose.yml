@@ -25,6 +25,8 @@ services:
       POSTGRES_DB: db
     volumes: 
       - ./backend/src/migrations/dbinit.sql:/docker-entrypoint-initdb.d/init.sql
+    logging:
+      driver: none
 
 volumes:
     db-data:
