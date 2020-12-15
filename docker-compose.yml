@@ -1,7 +1,7 @@
 version: "3"
 services:
-  backend-template:
-    container_name: backend-template
+  backend:
+    container_name: backend
     build: ./backend/
     depends_on:
       - db
@@ -9,6 +9,8 @@ services:
       DATABASE_URL: postgres://user:password@db/db
       NODE_ENV: development
       PORT: 4000
+    expose:
+      - 4000
     ports:
       - "4000:4000"
     volumes:
@@ -27,6 +29,21 @@ services:
       - ./backend/src/migrations/dbinit.sql:/docker-entrypoint-initdb.d/init.sql
     logging:
       driver: none
+
+  frontend:
+    build: ./frontend/
+    command: npm start
+    volumes:
+      - ./frontend:/usr/app
+      - /usr/app/node_modules
+    depends_on:
+      - backend
+    ports:
+      - "3000:3000"
+    logging:
+      driver: none
+    links:
+      - backend
 
 volumes:
     db-data:
