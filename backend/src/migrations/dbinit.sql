@@ -7,32 +7,43 @@ CREATE TABLE person (
     name TEXT NOT NULL
 );
 
-CREATE TABLE event (
-    event_id SERIAL PRIMARY KEY,
+CREATE TABLE hackathon (
+    hackathon_id SERIAL PRIMARY KEY,
     title TEXT NOT NULL,
-    description TEXT
+    description TEXT,
+    start_date DATE NOT NULL,
+    end_date DATE NOT NULL
 );
 
 CREATE TABLE project (
     project_id SERIAL PRIMARY KEY,
     title TEXT NOT NULL,
     description TEXT,
-    event_id INT not NULL,
+    hackathon_id INT not NULL,
     person_id INT not NULL,
-    CONSTRAINT fk_event 
-        FOREIGN KEY(event_id)
-            REFERENCES event(event_id),
-    constraint fk_user
-        FOREIGN KEY(person_id)
-            REFERENCES person(person_id)
+    submit_date DATE DEFAULT NOW(),
+    FOREIGN KEY(hackathon_id) REFERENCES hackathon(hackathon_id),
+    FOREIGN KEY(person_id) REFERENCES person(person_id)
+);
+
+create TABLE comment (
+    comment_id SERIAL PRIMARY KEY,
+    contents TEXT,
+    project_id INT NOT NULL,
+    person_id INT NOT NULL,
+    FOREIGN KEY(project_id) REFERENCES project(project_id),
+    FOREIGN KEY(person_id) REFERENCES person(person_id)
 );
 
 INSERT INTO person(name)
 VALUES ('TEST PERSON 1'), 
        ('TEST PERSON 2');
 
-INSERT INTO event(title)
-VALUES ('TEST EVENT');
+INSERT INTO hackathon(title, start_date, end_date)
+VALUES ('TEST Hackthon', DATE '2020-12-16', DATE '2020-12-25');
 
-INSERT INTO project(title, description, event_id, person_id)
-VALUES ('IF YOU CAN SEE THIS ON THE FRONTEND, THEN EVERYTHING IS WORKING FINE', 'TEST DESCRIPTION', 1, 1);
+INSERT INTO project(title, description, hackathon_id, person_id)
+VALUES ('TEST PROJECT', 'Generic Description', 1, 1);
+
+INSERT INTO comment(contents, project_id, person_id)
+VALUES ('TEST COMMENT', 1, 1);
