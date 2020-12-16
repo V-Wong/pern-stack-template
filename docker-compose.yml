@@ -18,6 +18,7 @@ services:
       - /usr/app/node_modules
 
   db:
+    container_name: db
     image: postgres
     expose:
       - 5432
@@ -31,6 +32,7 @@ services:
       driver: none
 
   frontend:
+    container_name: frontend
     build: ./frontend/
     command: npm start
     volumes:

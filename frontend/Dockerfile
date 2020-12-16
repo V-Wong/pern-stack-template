@@ -1,19 +1,11 @@
 FROM node:10-alpine
+MAINTAINER V-Wong
+LABEL repo=https://github.com/V-Wong/backend-template
 
-# Create app directory
 WORKDIR /usr/app
-
-# Install app dependencies
-# A wildcard is used to ensure both package.json AND package-lock.json are copied
-# where available (npm@5+)
 COPY package*.json ./
-
-RUN npm install
-# If you are building your code for production
-# RUN npm install --only=production
-
-# Copy app source to working folder
 COPY . .
+RUN npm install
 
 EXPOSE 3000
 CMD [ "npm", "start" ]
