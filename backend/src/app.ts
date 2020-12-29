@@ -3,7 +3,7 @@ import express from "express";
 import projectRouter from "./routes/project";
 
 const app = express();
-const port = 4000;
+const port = 8000;
 
 app.get("/", (_, res) => {
   res.send('Test123!');
