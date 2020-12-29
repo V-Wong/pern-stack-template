@@ -7,7 +7,7 @@ function App() {
 
   useEffect(() => {
     (async () => {
-      const response = await fetch("/project");
+      const response = await fetch("/api/project");
       const result = await response.json();
 
       setResult(result[0].title);

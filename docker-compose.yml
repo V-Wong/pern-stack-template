@@ -8,11 +8,6 @@ services:
     environment:
       DATABASE_URL: postgres://user:password@db/db
       NODE_ENV: development
-      PORT: 4000
-    expose:
-      - 4000
-    ports:
-      - "4000:4000"
     volumes:
       - ./backend:/usr/app
       - /usr/app/node_modules
@@ -33,17 +28,12 @@ services:
 
   frontend:
     container_name: frontend
-    build: ./frontend/
-    command: npm start
-    volumes:
-      - ./frontend:/usr/app
-      - /usr/app/node_modules
+    build: ./frontend
+    restart: unless-stopped
+    ports:
+      - "8000:80"
     depends_on:
       - backend
-    ports:
-      - "3000:3000"
-    logging:
-      driver: none
     links:
       - backend
 
