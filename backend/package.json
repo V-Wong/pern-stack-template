@@ -14,13 +14,20 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
+    "cookie-parser": "^1.4.5",
+    "cookie-session": "^1.4.0",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
+    "passport": "^0.4.1",
+    "passport-github2": "^0.1.12",
     "pg": "^8.3.2"
   },
   "devDependencies": {
+    "@types/cookie-session": "^2.0.42",
     "@types/express": "^4.17.7",
     "@types/node": "^14.14.10",
+    "@types/passport": "^1.0.5",
+    "@types/passport-github2": "^1.2.4",
     "@types/pg": "^7.14.7",
     "ts-node-dev": "^1.0.0",
     "typescript": "^3.9.7"

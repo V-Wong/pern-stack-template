@@ -4,7 +4,8 @@ DROP TABLE IF EXISTS users;
 
 CREATE TABLE person (
     person_id SERIAL PRIMARY KEY,
-    name TEXT NOT NULL
+    name TEXT NOT NULL,
+    github_id TEXT NOT NULL
 );
 
 CREATE TABLE hackathon (
@@ -35,9 +36,9 @@ create TABLE comment (
     FOREIGN KEY(person_id) REFERENCES person(person_id)
 );
 
-INSERT INTO person(name)
-VALUES ('TEST PERSON 1'), 
-       ('TEST PERSON 2');
+INSERT INTO person(name, github_id)
+VALUES ('TEST PERSON 1', 'Test'), 
+       ('TEST PERSON 2', 'Test');
 
 INSERT INTO hackathon(title, start_date, end_date)
 VALUES ('TEST Hackthon', DATE '2020-12-16', DATE '2020-12-25');
