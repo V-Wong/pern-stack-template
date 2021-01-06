@@ -6,11 +6,26 @@ Designed as a general purpose starting point for rapidly developing full stack p
 Containerized for consistent development environments and easy deployment.
 
 ## Quick Start
-This is a Docker container and is launched using:
+### Development - Backend
+The backend can be launched by running in ``/``:
+```bash
+$ docker-compose -f docker-compose-dev.yml up
+```
+This runs the backend server on http://localhost:5000. 
+
+### Development - Frontend
+The frontend can be launched by running in ``/frontend``:
+```bash
+$ npm run start
+```
+This runs the frontend server on http://localhost:3000. All requests will be proxied to the backend.
+
+### Deployment
+Both the frontend and backend can be deployed by running in ``/``:
 ```bash
 $ docker-compose up
 ```
-This runs the backend server on http://localhost:4000 and the frontend server on http://localhost:3000.
+This runs the deployed website on http://localhost:8000.
 
 ## Overview
 ### Backend Structure
