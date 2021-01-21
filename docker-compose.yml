@@ -1,15 +1,16 @@
 version: "3"
 services:
   backend:
-    container_name: backend
-    build: ./backend/
+    build:
+      context: .
+      dockerfile: ./backend/Dockerfile
     command: npm run start
     ports:
       - "5000:5000"
     depends_on:
       - db
     environment:
-      CLIENT_URL: http://localhost:3001
+      CLIENT_URL: http://localhost:3000
       DATABASE_URL: postgres://user:password@db/db
       GITHUB_CALLBACK_URL: http://localhost:5000/auth/github/callback
       NODE_ENV: production
@@ -17,6 +18,7 @@ services:
     volumes:
       - ./backend:/usr/app
       - /usr/app/node_modules
+      - ./types:/usr/types
 
   db:
     container_name: db
@@ -29,19 +31,21 @@ services:
       POSTGRES_DB: db
     volumes: 
       - ./backend/src/migrations/dbinit.sql:/docker-entrypoint-initdb.d/init.sql
-    logging:
-      driver: none
 
   frontend:
-    container_name: frontend
-    build: ./frontend
+    build:
+      context: .
+      dockerfile: ./frontend/Dockerfile
     restart: unless-stopped
     ports:
-      - "3001:80"
+      - "3000:80"
     depends_on:
       - backend
     links:
       - backend
+    volumes:
+      - ./frontend:/usr/app
+      - ./types/index.ts:/usr/types/index.ts
 
 volumes:
     db-data:

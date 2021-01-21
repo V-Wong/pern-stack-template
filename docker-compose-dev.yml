@@ -1,15 +1,16 @@
 version: "3"
 services:
   backend:
-    container_name: backend
-    build: ./backend/
-    command: npm run start
+    build:
+      context: .
+      dockerfile: ./backend/Dockerfile
+    command: npm run dev
     ports:
       - "5000:5000"
     depends_on:
       - db
     environment:
-      CLIENT_URL: http://localhost:3001
+      CLIENT_URL: http://localhost:3000
       DATABASE_URL: postgres://user:password@db/db
       GITHUB_CALLBACK_URL: http://localhost:5000/auth/github/callback
       NODE_ENV: development
@@ -17,6 +18,7 @@ services:
     volumes:
       - ./backend:/usr/app
       - /usr/app/node_modules
+      - ./types:/usr/types
 
   db:
     container_name: db

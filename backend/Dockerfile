@@ -1,9 +1,11 @@
-FROM node:12-alpine
+FROM node:10-alpine
 MAINTAINER V-Wong
 LABEL repo=https://github.com/V-Wong/backend-template
 
 RUN mkdir -p /usr/app
 WORKDIR /usr/app
-COPY package.json tsconfig.json ./
-COPY src ./src
+COPY ./backend/package.json ./backend/tsconfig.json ./
+COPY ./backend/src ./src
+COPY ./types /usr/types
 RUN npm install
+RUN npm run build
