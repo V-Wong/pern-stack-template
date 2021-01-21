@@ -12,16 +12,11 @@ async function createPerson(githubId: number) {
   const client = await pool.connect();
 
   try {
-    await client.query("BEGIN");
     const insertText = `INSERT INTO person(name, github_id)
                         VALUES ('Test', $1);`;
     const insertValues = [githubId];
     await client.query(insertText, insertValues);
-    await client.query("COMMIT");
-    client.release();
   } catch (e) {
-    await client.query("ROLLBACK");
-    client.release();
     throw e;
   };
 };
