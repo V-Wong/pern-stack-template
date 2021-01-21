@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 import api from "./api/API";
-import Feature from "./components/Feature";
+import ProjectTitle from "./components/ProjectTitle";
 import AuthContext from "./components/AuthContext";
 
 function App() {
@@ -25,7 +25,7 @@ function App() {
 
   return (
     <AuthContext.Provider value={user}>
-      <Feature text={result} />
+      <ProjectTitle text={result} />
       <div style={{ display: "flex", placeContent: "center" }}>
         {user?.name ?
           <p>User details: {user?.name}</p>
