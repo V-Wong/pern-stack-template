@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 
-import Feature from "./components/feature/Feature";
-import AuthContext from "./components/authContext/AuthContext";
+import api from "./api/API";
+import Feature from "./components/Feature";
+import AuthContext from "./components/AuthContext";
 
 function App() {
   const [user, setUser] = useState<any>({});
@@ -10,29 +11,15 @@ function App() {
 
   useEffect(() => {
     (async () => {
-      const response = await fetch("/api/project");
-      const result = await response.json();
-
-      setResult(result[0].title);
-    })();
-  }, []);
-
-  useEffect(() => {
-    (async () => {
       try {
-        const response = await fetch("/api/auth/login/success", {
-          method: "GET",
-          credentials: "include",
-        });
-
-        if (response.status !== 200)
-          throw new Error("failed to authenticate user");
-
-        const json = await response.json();
-        setUser(json.user);
+        const userLogin = await api.login();
+        setUser(userLogin);
       } catch (e) {
         setError("Failed to authenticate user");
-      }
+      };
+
+      const projectData = await api.getAllProjects();
+      setResult(projectData[0].title);
     })();
   }, []);
 
@@ -47,6 +34,6 @@ function App() {
       </div>
     </AuthContext.Provider>
   );
-}
+};
 
 export default App;
