@@ -29,7 +29,7 @@ function App() {
       <div style={{ display: "flex", placeContent: "center" }}>
         {user?.name ?
           <p>User details: {user?.name}</p>
-          : <a href="http://localhost:5000/auth/github">Login</a>
+          : <a href={api.getLoginURL()}>Login</a>
         }
       </div>
     </AuthContext.Provider>

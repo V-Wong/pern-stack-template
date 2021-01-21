@@ -17,6 +17,10 @@ class API {
     return res;
   };
 
+  public getLoginURL() {
+    return "/api/auth/github";
+  };
+
   public async login() {
     const res = await fetch("/api/auth/login/success", {
       method: "GET",
