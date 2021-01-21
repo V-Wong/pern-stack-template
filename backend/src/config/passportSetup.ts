@@ -1,20 +1,20 @@
 require("dotenv").config();
 import passport from "passport";
+import camelcaseKeys from "camelcase-keys";
 import GitHubStrategy from "passport-github2";
 import * as userDb from "../models/person";
 
 // serialize the user.id to save in the cookie session
 // so the browser will remember the user when login
 passport.serializeUser((user, done) => {
-  console.log(user);
-  done(null, (user as any).github_id);
+  done(null, (user as any).githubId);
 });
 
 // deserialize the cookieUserId to user in the database
 passport.deserializeUser(async (id: number, done) => {
   try {
     const user = await userDb.getPersonByGitHub(id);
-    done(null, user.rows[0]);
+    done(null, camelcaseKeys(user.rows[0]));
   } catch (e) {
     done(new Error("Failed to deserialize an user"));
   }
@@ -38,10 +38,10 @@ passport.use(
         const user = await userDb.getPersonByGitHub(profile.id);
 
         if (user.rows.length) {
-          done(null, user.rows[0]);
+          done(null, camelcaseKeys(user.rows[0]));
         }
       }
-      done(null, user.rows[0]);
+      done(null, camelcaseKeys(user.rows[0]));
     }
   )
 );
