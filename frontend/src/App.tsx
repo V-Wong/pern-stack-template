@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from 'react';
-
+import { BrowserRouter, Route, Switch } from "react-router-dom";
+ 
 import api from "./api/API";
-import ProjectTitle from "./components/ProjectTitle";
 import AuthContext from "./components/AuthContext";
+
+import Home from "./pages/Home";
+
 
 function App() {
   const [user, setUser] = useState<any>({});
   const [error, setError] = useState<string | null>(null);
-  const [result, setResult] = useState("");
 
   useEffect(() => {
     (async () => {
@@ -17,21 +19,18 @@ function App() {
       } catch (e) {
         setError("Failed to authenticate user");
       };
-
-      const projectData = await api.getAllProjects();
-      setResult(projectData[0].title);
     })();
   }, []);
 
   return (
     <AuthContext.Provider value={user}>
-      <ProjectTitle text={result} />
-      <div style={{ display: "flex", placeContent: "center" }}>
-        {user?.name ?
-          <p>User details: {user?.name}</p>
-          : <a href={api.getLoginURL()}>Login</a>
-        }
-      </div>
+      <BrowserRouter>
+        <Switch>
+          <Route path="/" exact>
+            <Home />
+          </Route>
+        </Switch>
+      </BrowserRouter>
     </AuthContext.Provider>
   );
 };
