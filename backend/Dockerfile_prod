@@ -1,0 +1,14 @@
+FROM node:10-alpine
+MAINTAINER V-Wong
+LABEL repo=https://github.com/V-Wong/backend-template
+
+WORKDIR /usr/src/app
+COPY ./backend/package.json ./backend/tsconfig.json ./
+COPY ./backend/src ./src
+COPY ./types /usr/types
+COPY ./backend/.env ./
+RUN npm install
+RUN npm run build
+RUN ls ./
+
+CMD ["npm", "start"]

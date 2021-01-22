@@ -3,8 +3,7 @@ services:
   backend:
     build:
       context: .
-      dockerfile: ./backend/Dockerfile
-    command: npm run start
+      dockerfile: ./backend/Dockerfile_prod
     ports:
       - "5000:5000"
     depends_on:
@@ -39,10 +38,6 @@ services:
     restart: unless-stopped
     ports:
       - "3000:80"
-    depends_on:
-      - backend
-    links:
-      - backend
     volumes:
       - ./frontend:/usr/app
       - ./types/index.ts:/usr/types/index.ts
