@@ -1,5 +1,7 @@
 import pool from "../dbConfig/dbConfig";
 
+import { Person } from "../../../types";
+
 function getPerson(id: number) {
   return pool.query("SELECT * from person where person_id = $1", [id]);
 };

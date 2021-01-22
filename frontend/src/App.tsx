@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Route, Switch } from "react-router-dom";
- 
+
 import api from "./api/API";
 import AuthContext from "./components/AuthContext";
 
 import Home from "./pages/Home";
 
+import { Person } from "../../types";
 
 function App() {
   const [user, setUser] = useState<any>({});
