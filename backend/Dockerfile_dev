@@ -2,13 +2,15 @@ FROM node:10-alpine
 MAINTAINER V-Wong
 LABEL repo=https://github.com/V-Wong/backend-template
 
-RUN mkdir -p /usr/app
-WORKDIR /usr/app
+WORKDIR /usr/src
+COPY ./types ./types
+COPY ./backend/.env ./
+
+WORKDIR app
 COPY ./backend/package.json ./backend/tsconfig.json ./
 COPY ./backend/src ./src
-COPY ./types /usr/types
-COPY ./backend/.env ./
 RUN npm install
 RUN npm run build
+COPY ./backend/.env ./
 
 CMD ["npm", "run", "dev"]
