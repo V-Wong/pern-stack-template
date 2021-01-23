@@ -4,8 +4,15 @@ DROP TABLE IF EXISTS users;
 
 CREATE TABLE person (
     person_id SERIAL PRIMARY KEY,
-    name TEXT NOT NULL,
-    github_id TEXT NOT NULL
+    name TEXT
+);
+
+CREATE TABLE oauth_mapping (
+    oauth_mapping_id SERIAL PRIMARY KEY,
+    person_id INT NOT NULL,
+    oauth_provider TEXT NOT NULL,
+    oauth_id INT NOT NULL,
+    FOREIGN KEY(person_id) REFERENCES person(person_id)
 );
 
 CREATE TABLE project (
@@ -17,9 +24,8 @@ CREATE TABLE project (
     FOREIGN KEY(person_id) REFERENCES person(person_id)
 );
 
-INSERT INTO person(name, github_id)
-VALUES ('TEST PERSON 1', 'Test'), 
-       ('TEST PERSON 2', 'Test');
+INSERT INTO person(name)
+VALUES ('TEST PERSON 1');
 
 INSERT INTO project(title, description, person_id)
 VALUES ('TEST PROJECT', 'Generic Description', 1);

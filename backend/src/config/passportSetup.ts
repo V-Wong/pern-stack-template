@@ -7,14 +7,14 @@ import * as userDb from "../models/person";
 // serialize the user.id to save in the cookie session
 // so the browser will remember the user when login
 passport.serializeUser((user, done) => {
-  done(null, (user as any).githubId);
+  done(null, (user as any).oauth_id);
 });
 
 // deserialize the cookieUserId to user in the database
 passport.deserializeUser(async (id: number, done) => {
   try {
     const user = await userDb.getPersonByGitHub(id);
-    done(null, camelcaseKeys(user.rows[0]));
+    done(null, user.rows[0]);
   } catch (e) {
     done(new Error("Failed to deserialize an user"));
   }
@@ -34,14 +34,14 @@ passport.use(
 
       // create new user if the database doesn't have this user
       if (!user.rows.length) {
-        await userDb.createPerson(profile.id);
+        await userDb.createPersonByGitHub(profile.id);
         const user = await userDb.getPersonByGitHub(profile.id);
 
         if (user.rows.length) {
-          done(null, camelcaseKeys(user.rows[0]));
+          done(null, user.rows[0]);
         }
       }
-      done(null, camelcaseKeys(user.rows[0]));
+      done(null, user.rows[0]);
     }
   )
 );
