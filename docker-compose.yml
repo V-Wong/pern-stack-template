@@ -9,9 +9,9 @@ services:
     depends_on:
       - db
     environment:
-      CLIENT_URL: http://localhost:3000
+      CLIENT_URL: http://localhost:3000 # Set to server address given by Linode
       DATABASE_URL: postgres://user:password@db/db
-      GITHUB_CALLBACK_URL: http://localhost:5000/auth/github/callback
+      GITHUB_CALLBACK_URL: /auth/github/callback
       NODE_ENV: production
       PORT: 5000
     volumes:
